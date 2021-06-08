@@ -4,7 +4,7 @@ import { TWO_D_POSITION } from '@space-invaders/store/state/position';
 // life from 0-100
 const MAX_LIFE: number = 100;
 
-interface UserState {
+export interface UserState {
 	life: number;
 	position: TWO_D_POSITION;
 	shotInProgress: boolean;
@@ -13,8 +13,8 @@ interface UserState {
 const initialUserState: UserState = {
 	life: MAX_LIFE,
 	position: {
-		top: 50, 
-		left: 100
+		top: 100, 
+		left: 50
 	},
 	shotInProgress: false,
 };
