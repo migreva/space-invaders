@@ -1,6 +1,6 @@
 import { StoreState } from '@space-invaders/store';
-import { TWO_D_POSITION } from '@space-invaders/store/state/position';
-import { UserState } from '@space-invaders/store/user';
+import { DrawableItem } from '@space-invaders/store/state/position';
+import { Shot } from '@space-invaders/store/user/shot';
 
 export default function renderGame(state: StoreState, canvas: HTMLCanvasElement): void {
 	const context: CanvasRenderingContext2D = canvas.getContext('2d');
@@ -9,26 +9,33 @@ export default function renderGame(state: StoreState, canvas: HTMLCanvasElement)
 	// that needs to be updated each time
 	context.clearRect(0, 0, canvas.width, canvas.height);
 
-	const { position }: UserState = state.user;
-	const {
-		top,
-		left, 
-	}: TWO_D_POSITION = storePositionToCanvasPosition(position, canvas);
-	context.fillRect(left, top - 10, 10, 10);
+	if (state.state.paused) {
+		context.fillText('Paused (hit Esc to unpause)', 0, 10);
+	}
+
+	// render users
+	drawItem(state.user, canvas);
+
+	// render shots
+	state.user.shots.forEach((shot: Shot) => {
+		drawItem(shot, canvas);
+	})
 }
 
 /**
  * 
- * @param position the 2d position from the store (scale of 0-100)
+ * @param item an item that implements the DrawableItem interfaces
  * @param canvas the canvas its being rendered to
  */
-function storePositionToCanvasPosition(position: TWO_D_POSITION, canvas: HTMLCanvasElement): TWO_D_POSITION {
-	const { height, width }: HTMLCanvasElement = canvas;
-	const leftMultiplier: number = width / 100;
-	const topMultiplier: number = height / 100;
+function drawItem(item: DrawableItem, canvas: HTMLCanvasElement): void {
+	const context: CanvasRenderingContext2D = canvas.getContext('2d');
 
-	return {
-		left: position.left * leftMultiplier,
-		top: position.top * topMultiplier,
-	}
+	const leftMultiplier: number = canvas.width / 100;
+	const topMultiplier: number = canvas.height / 100;
+
+	// set the left and top, adjusting the top's location for height of the element
+	const left: number = item.position.left * leftMultiplier;
+	const top: number = (item.position.top * topMultiplier) - item.width;
+
+	context.fillRect(left, top, item.width, item.height);
 }
