@@ -15,6 +15,6 @@ export function GameCanvas(props: GameCanvasProps): JSX.Element {
 	});
 
 	return (
-		<canvas ref={canvas} width={MAX_POSITION_LEFT} height={MAX_POSITION_TOP}/>
+		<canvas ref={canvas} width={MAX_POSITION_LEFT} height={MAX_POSITION_TOP} data-testid="game-canvas"/>
 	);
 }
