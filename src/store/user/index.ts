@@ -40,7 +40,7 @@ export const userStore: Slice = createSlice({
 			// dont allow another shot until the newest shot is at least 60% the way up the screen
 			if (state.shots.length){
 				const youngestShot: Shot = state.shots[state.shots.length - 1];
-				if (youngestShot.position.top > (MAX_POSITION_TOP * 0.6)) {
+				if (youngestShot.position.top > (MAX_POSITION_TOP * 0.8)) {
 					return;
 				}
 			}

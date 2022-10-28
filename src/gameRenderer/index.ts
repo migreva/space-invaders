@@ -3,6 +3,7 @@ import { DrawableItem } from '@space-invaders/store/state/position';
 import { Shot } from '@space-invaders/store/user/shot';
 
 export default function renderGame(state: StoreState, canvas: HTMLCanvasElement): void {
+	console.log(state);
 	const context: CanvasRenderingContext2D = canvas.getContext('2d');
 
 	// TODO this is inefficient and we should only re-draw the parts of the canvas
