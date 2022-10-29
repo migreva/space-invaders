@@ -32,6 +32,9 @@ export const stateStore: Slice = createSlice({
 		},
 		stopGame: (state: CoreGameState) => {
 			// TODO render final state
+			if (state.lastTick) {
+				clearTimeout(state.lastTick);
+			}
 		}
 	}
 });
@@ -58,8 +61,7 @@ export function startGameTick(): ThunkAction<void, StoreState, unknown, AnyActio
 
 export function stopGameTick(): ThunkAction<void, CoreGameState, unknown, AnyAction> {
 	return (dispatch: ThunkDispatch<CoreGameState, unknown, AnyAction>, getState: () => CoreGameState): void => {
-		const store: StoreState = getState();
-		dispatch(pauseGame(store));
+		const store: StoreState = getState(); 
 		dispatch(stopGame(store));
 	};
 }
@@ -79,6 +81,7 @@ export function togglePause(): ThunkAction<void, CoreGameState, unknown, AnyActi
 export function handleUserInput(e: KeyboardEvent): ThunkAction<void, CoreGameState, unknown, AnyAction> {
 	return (dispatch: ThunkDispatch<StoreState, unknown, AnyAction>, getState: () => StoreState): void => {
 		const store: StoreState = getState();
+		console.log('user input ', e.key);
 
 		// keys that exist indepedent of the game state
 		if (e.key === 'Escape') {
