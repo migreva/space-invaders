@@ -2,7 +2,7 @@
 import { App } from '@space-invaders/apps/react/app';
 import { store } from '@space-invaders/store';
 import { handleUserInput, startGameTick, stopGameTick } from '@space-invaders/store/state';
-import { createRoot, Root } from "react-dom/client";
+import { createRoot, Root } from 'react-dom/client';
 import { AnyAction } from 'redux';
 
 /**
@@ -11,6 +11,7 @@ import { AnyAction } from 'redux';
  * @param root React root
  */
 function renderApp(root: Root): void {
+	// render our react app
 	root.render(App({
 		state: store.getState(),
 	}));
