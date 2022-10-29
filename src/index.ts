@@ -1,7 +1,7 @@
 
 import { App } from '@space-invaders/apps/react/app';
 import { store } from '@space-invaders/store';
-import { handleUserInput, startGameTick } from '@space-invaders/store/state';
+import { handleUserInput, startGameTick, stopGameTick } from '@space-invaders/store/state';
 import { createRoot, Root } from "react-dom/client";
 import { AnyAction } from 'redux';
 
@@ -10,14 +10,13 @@ import { AnyAction } from 'redux';
  * 
  * @param root React root
  */
-function renderApp(root: Root) {
+function renderApp(root: Root): void {
 	root.render(App({
 		state: store.getState(),
 	}));
 }
 
-
-(() => {
+export function startGame(): void {
 	// init the root HTML element
 	const rootHTMLElement: HTMLDivElement = document.createElement('div');
 	document.body.appendChild(rootHTMLElement);
@@ -38,4 +37,12 @@ function renderApp(root: Root) {
 	function userInputListener(e: KeyboardEvent): void {
 		store.dispatch(handleUserInput(e) as unknown as AnyAction);
 	}
+}
+
+export function stopGame() {
+	store.dispatch(stopGameTick() as unknown as AnyAction);
+}
+
+(() => {
+	startGame();
 })();

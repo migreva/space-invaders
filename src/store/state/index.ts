@@ -30,10 +30,13 @@ export const stateStore: Slice = createSlice({
 			state.paused = true;
 			clearTimeout(state.lastTick);
 		},
+		stopGame: (state: CoreGameState) => {
+			// TODO render final state
+		}
 	}
 });
 
-const { setTick, pauseGame } = stateStore.actions;
+const { setTick, pauseGame, stopGame } = stateStore.actions;
 
 export default stateStore.reducer;
 
@@ -51,6 +54,14 @@ export function startGameTick(): ThunkAction<void, StoreState, unknown, AnyActio
 			dispatch(startGameTick());
 		}, GAME_TICK_TIMEOUT)));
 	}
+}
+
+export function stopGameTick(): ThunkAction<void, CoreGameState, unknown, AnyAction> {
+	return (dispatch: ThunkDispatch<CoreGameState, unknown, AnyAction>, getState: () => CoreGameState): void => {
+		const store: StoreState = getState();
+		dispatch(pauseGame(store));
+		dispatch(stopGame(store));
+	};
 }
 
 export function togglePause(): ThunkAction<void, CoreGameState, unknown, AnyAction> {

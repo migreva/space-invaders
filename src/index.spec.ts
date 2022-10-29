@@ -2,19 +2,24 @@
  * @jest-environment jsdom
  */
 
-import { Store } from '@reduxjs/toolkit';
-import { App } from '@space-invaders/apps/react/app';
-import { store } from '@space-invaders/store';
-import { render, screen } from '@testing-library/react';
+import { startGame, stopGame } from '@space-invaders/index';
 import '@testing-library/jest-dom';
+import { screen } from '@testing-library/react';
 import 'jest-canvas-mock';
+import { act } from 'react-dom/test-utils';
 
+beforeEach(() => {
+	act(() => startGame());
+});
+
+afterEach(() => {
+	act(() => stopGame());
+});
 
 test('should render a canvas element', (): void => {
-	const currentStore: Store = store;
-	render(App({
-		state: currentStore.getState()
-	}));
-
 	screen.findByTestId('game-canvas');
+});
+
+test('should pause the game when escape is pressed', (): void => {
+	
 });
