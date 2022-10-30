@@ -15,6 +15,17 @@ function checkForCanvasText(canvas: HTMLCanvasElement, text: string): CanvasRend
 }
 
 /**
+ * clear the canvas 2d context. since the canvas' entire history is stored, 
+ *  use this in between user events (like keystrokes) to ensure that the canvas
+ * is drawing exactly what is expected
+ * 
+ * @param canvas the canvas, whose context will be cleared
+ */
+export function clearCanvasContext(canvas: HTMLCanvasElement) {
+	canvas.getContext('2d').__clearEvents();
+}
+
+/**
  * assert that certain text exists in the canvas
  * 
  * @param canvas the canvas to check

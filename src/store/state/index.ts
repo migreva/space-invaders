@@ -81,7 +81,6 @@ export function togglePause(): ThunkAction<void, CoreGameState, unknown, AnyActi
 export function handleUserInput(e: KeyboardEvent): ThunkAction<void, CoreGameState, unknown, AnyAction> {
 	return (dispatch: ThunkDispatch<StoreState, unknown, AnyAction>, getState: () => StoreState): void => {
 		const store: StoreState = getState();
-		console.log('user input ', e.key);
 
 		// keys that exist indepedent of the game state
 		if (e.key === 'Escape') {

@@ -3,7 +3,7 @@
  */
 
 import { startGame, stopGame } from '@space-invaders/game';
-import { assertCanvasTextDoesNotExists, assertCanvasTextExists } from '@space-invaders/utils/test-helpers/test-for-canvas-test';
+import { assertCanvasTextDoesNotExists, assertCanvasTextExists, clearCanvasContext } from '@space-invaders/utils/test-helpers/test-for-canvas-test';
 import '@testing-library/jest-dom';
 import { fireEvent } from '@testing-library/dom';
 import { screen } from '@testing-library/react';
@@ -52,8 +52,10 @@ test('should pause the game when escape is pressed', async (): Promise<void> => 
 		PAUSE_TEXT,
 	);
 
+	// clear the canvas context, ensuring we only draw what is needed
+	clearCanvasContext(canvas);
+
 	// now un-pause the game by keystroke
-	canvas.getContext('2d').__clearEvents();
 	fireEvent.keyDown(document, {
 		key: 'Escape',
 		code: 'Escape',
